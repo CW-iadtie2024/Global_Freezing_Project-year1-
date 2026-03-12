@@ -11,6 +11,8 @@ public class enemyAI : MonoBehaviour, IDamageable
 
     [SerializeField] private float attackRange = 1f;
     private Animator animator;
+    public int paused = 0;
+    public GameObject frozenEnemy;
 
     public bool isFrozen = false;
 
@@ -23,6 +25,7 @@ public class enemyAI : MonoBehaviour, IDamageable
     private Transform player;
     private bool isMovingRight = true;
     private Rigidbody2D rb;
+
     void Awake(){
         currentHealth = maxHealth;
         rb = GetComponent<Rigidbody2D>();
@@ -34,7 +37,7 @@ public class enemyAI : MonoBehaviour, IDamageable
     }
     void Update(){
         if(currentHealth <= 0) return;
-        attackTimer -= Time.deltaTime;
+        attackTimer -= Time.deltaTime * paused;
         if(player != null){
             float distanceToPlayer = Vector2.Distance(transform.position, player.position);
             if (distanceToPlayer <= detectionRange){
@@ -93,7 +96,10 @@ public class enemyAI : MonoBehaviour, IDamageable
         return true;
     }
     private void Die(){
+        Instantiate(frozenEnemy, transform.position, transform.rotation);
+        Destroy(gameObject);
         rb.linearVelocity = Vector2.zero;
+      
         isFrozen = true;
         //gameObject.SetActive(false);
     }

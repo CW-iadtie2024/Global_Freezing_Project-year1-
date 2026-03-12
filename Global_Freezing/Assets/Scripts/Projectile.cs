@@ -3,21 +3,24 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField] private float speed;
-    private float direction = 1;
+    //private PlayerMovement playerMovement;
     private bool hit = false;
     private BoxCollider2D boxCollider;
     private Animator anim;
+    private float direction = -1;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
+        //playerMovement = GetComponent<PlayerMovement>();
     }
 
     private void Update()
     {
-        if (hit) return;
+       // if (hit) return;
         float movementSpeed = speed * Time.deltaTime * direction;
-        transform.Translate(movementSpeed, 0, 0);
+       transform.Translate(movementSpeed, 0, 0);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

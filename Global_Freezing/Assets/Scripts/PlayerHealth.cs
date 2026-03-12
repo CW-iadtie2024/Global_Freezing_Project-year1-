@@ -1,12 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+
 [RequireComponent(typeof(SpriteRenderer))]
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
     [SerializeField] float maxHealth = 100f;
     [SerializeField] float invulnerabilityDuration = 1f;
     [SerializeField] float blinkInterval = 0.1f;
+
 
     float currentHealth;
     float invulnerabilityTimer;

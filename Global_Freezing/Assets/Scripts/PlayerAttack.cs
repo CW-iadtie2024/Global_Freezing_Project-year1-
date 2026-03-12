@@ -16,7 +16,6 @@ public class PlayerAttack : MonoBehaviour
         if(Input.GetMouseButton(0) && cooldownTimer >attackCooldown){
             Attack();
         }
-        cooldownTimer += Time.deltaTime;
     }
     private void Attack(){
         animator.SetTrigger("attack");

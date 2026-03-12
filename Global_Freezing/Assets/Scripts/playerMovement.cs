@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     public Transform Aim;
     bool isWalking = false;
 
+    public float direction = 0;
+
     private Rigidbody2D rb;
     private float horizInput;
     private bool isGrounded;
@@ -28,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        
         horizInput = Input.GetAxisRaw("Horizontal");
 
         Vector2 rayOrigin = groundCheck != null ? (Vector2)groundCheck.position : (Vector2)transform.position + groundCheckOffset;
@@ -42,8 +45,14 @@ public class PlayerMovement : MonoBehaviour
 
         if (spriteRenderer != null)
         {
-            if (horizInput < -0.1f) spriteRenderer.flipX = false;
-            else if (horizInput > 0.1f) spriteRenderer.flipX = true;
+            if (horizInput < -0.1f){
+                spriteRenderer.flipX = false;
+                direction = -1;
+                }
+            else if (horizInput > 0.1f) {
+                spriteRenderer.flipX = true;
+                direction = 1;
+                }
         }
 
         // Update animator parameters
@@ -52,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetFloat("mSpeed", Mathf.Abs(horizInput));
             animator.SetBool("isGrounded", isGrounded);
         }
+        
     }
 
     void FixedUpdate()
