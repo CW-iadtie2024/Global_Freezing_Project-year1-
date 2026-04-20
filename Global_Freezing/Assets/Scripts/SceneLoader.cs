@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class SceneLoader : MonoBehaviour{
     public static SceneLoader instance;
     private bool isPaused = false;
+    public GameObject pauseMenuUI;
 
     private void Awake(){
         if (instance == null){
@@ -27,10 +28,12 @@ public class SceneLoader : MonoBehaviour{
     }
     public void PauseGame()
     {
+        pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
     }
     public void ResumeGame(){
+        pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
     }

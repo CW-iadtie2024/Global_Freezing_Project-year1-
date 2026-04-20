@@ -2,33 +2,50 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField] private float attackCooldown;
-    [SerializeField] private Transform icepoint;
-    [SerializeField] private GameObject[] icebolts;
+    public Transform icepointRight;
+    public Transform icepointLeft;
+    public GameObject icebolt;
     private Animator animator;
     private PlayerMovement playerMovement;
-    private float cooldownTimer = Mathf.Infinity;
-    private void Awake(){
-        animator = GetComponent<Animator>();
-        //playerMovement = GetComponent<playerMovement>();
-    }
-    private void Update(){
-        if(Input.GetMouseButton(0) && cooldownTimer >attackCooldown){
-            Attack();
-        }
-    }
-    private void Attack(){
-        animator.SetTrigger("attack");
-        cooldownTimer = 0;
+    private float fireRate = 3f;
+    float timer;
 
-        icebolts[FindIcebolt()].transform.position = icepoint.position;
-        icebolts[FindIcebolt()].GetComponent<Projectile>().SetDirection(Mathf.Sign(transform.localScale.x));
+    void Awake()
+    {
+        playerMovement = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
     }
-    private int FindIcebolt(){
-        for(int i = 0; i < icebolts.Length; i++){
-            if(!icebolts[i].activeInHierarchy)
-            return i;
+    void Update(){
+        timer += Time.deltaTime;
+
+        if(Input.GetButtonDown("Fire1") && timer >= fireRate && playerMovement.direction == 1)
+        {
+            Shoot("Right");
+            timer = 0f;
         }
-        return 0;
+        else if (Input.GetButtonDown("Fire1") && timer >= fireRate && playerMovement.direction == -1)
+        {
+            Shoot("Left");
+            timer = 0f;
+        }
     }
+    public void Shoot(string direction)
+    {
+        if(direction == "Left")
+        {
+            Instantiate(icebolt, icepointLeft.position, icepointLeft.rotation);
+            Debug.Log("bullet left");
+        }
+        else if (direction == "Right")
+        {
+            Instantiate(icebolt, icepointRight.position, icepointRight.rotation);
+            Debug.Log("bullet right");
+        }
+        
+    }
+
+    // public void Shoot()
+    // {
+    //     Instantiate(icebolt, icepoint.position, icepoint.rotation);
+    //     Debug.Log("bullet");
+    // }
 }

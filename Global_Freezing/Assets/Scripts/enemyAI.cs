@@ -11,7 +11,6 @@ public class enemyAI : MonoBehaviour, IDamageable
 
     [SerializeField] private float attackRange = 1f;
     private Animator animator;
-    public int paused = 0;
     public GameObject frozenEnemy;
 
     public bool isFrozen = false;
@@ -37,7 +36,7 @@ public class enemyAI : MonoBehaviour, IDamageable
     }
     void Update(){
         if(currentHealth <= 0) return;
-        attackTimer -= Time.deltaTime * paused;
+        attackTimer -= Time.deltaTime;
         if(player != null){
             float distanceToPlayer = Vector2.Distance(transform.position, player.position);
             if (distanceToPlayer <= detectionRange){

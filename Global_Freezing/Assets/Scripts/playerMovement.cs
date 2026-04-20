@@ -30,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        // Debug.Log(direction);
+
         
         horizInput = Input.GetAxisRaw("Horizontal");
 
